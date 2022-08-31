@@ -22,10 +22,10 @@ function Ball()
         pos_y = windows_height/2,
         vel_x = initial_vel.x,
         vel_y = initial_vel.y,
-        radius = 10,
+        radius = ball_radius,
         color = {r= 1, g = 1, b = 1},
         mode = "fill",
-    window_collosion = function (self)
+    window_collision = function (self)
         local top_collision_point = self.pos_y - self.radius
         local botton_collision_poit = self.pos_y +  self.radius
         local right_collision_poit =  self.pos_x - self.radius
