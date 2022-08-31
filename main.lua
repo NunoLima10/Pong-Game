@@ -1,7 +1,7 @@
 require("ball")
 require("player")
 require("game_config")
-local love =  require("love")
+local love = require("love")
 
 local ball = Ball()
 local player_A = Player(10,{r = 1, g = 0, b = 0 })
