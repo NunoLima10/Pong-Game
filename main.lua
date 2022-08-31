@@ -16,7 +16,6 @@ end
 
 function love.update(dt)
   
-    ball:window_collision()
     ball:update(dt)
 
     local diretion_A = 0

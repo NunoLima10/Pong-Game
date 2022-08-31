@@ -18,34 +18,35 @@ function Ball()
     local initial_vel = random_speed()
 
     return{
-        pos_x = windows_width/2,
-        pos_y = windows_height/2,
-        vel_x = initial_vel.x,
-        vel_y = initial_vel.y,
+        pos= {x = windows_width/2,y = windows_height/2},
+        vel = initial_vel,
         radius = ball_radius,
         color = {r= 1, g = 1, b = 1},
         mode = "fill",
     window_collision = function (self)
-        local top_collision_point = self.pos_y - self.radius
-        local botton_collision_poit = self.pos_y +  self.radius
-        local right_collision_poit =  self.pos_x - self.radius
-        local left_collision_poit =  self.pos_x + self.radius
+        local top_collision_point = self.pos.y - self.radius
+        local botton_collision_poit = self.pos.y +  self.radius
+        local right_collision_poit =  self.pos.x - self.radius
+        local left_collision_poit =  self.pos.x + self.radius
     
         if top_collision_point <= 0  or botton_collision_poit >= windows_height then
-            self.vel_y = self.vel_y * -1
+            self.vel.y = self.vel.y * -1
         end
-        if right_collision_poit <= 0  or left_collision_poit >= windows_width then
-            self.vel_x =  self.vel_x * -1
+        if right_collision_poit <= 0  then
+            self.vel.x =  self.vel.x * -1
         end
-    end,
-
-    draw = function (self)
-        love.graphics.setColor(self.color.r,self.color.g,self.color.b)
-        love.graphics.circle(self.mode,self.pos_x,self.pos_y,self.radius)
+        if left_collision_poit >= windows_width then
+            self.vel.x =  self.vel.x * -1
+        end
     end,
     update = function (self,dt)
-        self.pos_x = self.pos_x + self.vel_x * dt
-        self.pos_y = self.pos_y + self.vel_y * dt
+        self:window_collision()
+        self.pos.x = self.pos.x + self.vel.x * dt
+        self.pos.y = self.pos.y + self.vel.y * dt
+    end,
+    draw = function (self)
+        love.graphics.setColor(self.color.r,self.color.g,self.color.b)
+        love.graphics.circle(self.mode,self.pos.x,self.pos.y,self.radius)
     end,
 
 
