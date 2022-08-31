@@ -1,17 +1,7 @@
 require("ball")
 require("player")
+require("game_config")
 local love =  require("love")
-
---Game config
-_G.windows_width = 800
-_G.windows_height = 600
-_G.player_width = 20
-_G.player_height = 100
-_G.player_move_speed = 200
-_G.ball_radius = 10
-_G.player_keys = {A={up ="z",down = "s"} ,B={up ="o",down = "l"}}
-_G.diretions = {up = 1, down = -1}
-
 
 local ball = Ball()
 local player_A = Player(10,{r = 1, g = 0, b = 0 })
@@ -20,8 +10,8 @@ local player_B = Player(windows_width - player_width - 10,{r = 0, g = 0, b = 1 }
 
 function love.load()
     love.window.setMode(windows_width,windows_height)
-    love.window.setTitle("Pong")
-    love.graphics.setBackgroundColor(0.1,0.1,0.1)
+    love.window.setTitle(title)
+    love.graphics.setBackgroundColor(BG_color.r,BG_color.g,BG_color.b)
 end
 
 function love.update(dt)
