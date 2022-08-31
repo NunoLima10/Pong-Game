@@ -3,10 +3,28 @@ require("player")
 require("game_config")
 local love = require("love")
 
-local ball = Ball()
-local player_A = Player(10,{r = 1, g = 0, b = 0 })
-local player_B = Player(windows_width - player_width - 10,{r = 0, g = 0, b = 1 })
+local ball = Ball:new()
+local player_A = Player:new(
+    {
+        score = 0,
+        pos = {x = 10, y = windows_height/2 - player_height/2},
+        color = {r = 1, g = 1, b = 1 },
+        mode = "fill"
+    })
 
+local player_B = Player:new(
+    {
+        score = 0,
+        pos = {x = windows_width - player_width, y = windows_height/2 - player_height/2},
+        color = {r = 1, g = 1, b = 1 },
+        mode = "fill"
+    })
+
+local function game_reset()
+    ball:reset()
+    player_A.pos = {x = 10, y = windows_height/2 - player_height/2}
+    player_B.pos = {x = windows_width - player_width, y = windows_height/2 - player_height/2}
+end
 
 function love.load()
     love.window.setMode(windows_width,windows_height)
@@ -15,7 +33,6 @@ function love.load()
 end
 
 function love.update(dt)
-  
     ball:update(dt)
 
     local diretion_A = 0
@@ -27,6 +44,9 @@ function love.update(dt)
     if love.keyboard.isDown(player_keys.B.down) then diretion_B = diretions.down end
     player_A:move(dt,diretion_A)
     player_B:move(dt,diretion_B)
+    if love.keyboard.isDown("f") then
+        game_reset()
+    end
 end
 
 function love.draw()
