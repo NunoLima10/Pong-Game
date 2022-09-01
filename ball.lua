@@ -1,4 +1,4 @@
-require("game_config")
+
 local love =  require("love")
 
 local function random_speed()
@@ -14,13 +14,7 @@ local function random_speed()
     return {x = vel_x, y =vel_y}
 end
 
-Ball = {
-    pos = {x = windows_width/2,y = windows_height/2},
-    vel = random_speed(),
-    radius = ball_radius,
-    color = {r= 1, g = 1, b = 1},
-    mode = "fill"
-}
+Ball = {}
 
 function Ball:new(table)
     table = table or {}
@@ -29,34 +23,42 @@ function Ball:new(table)
     return table
 end
 
-function Ball:window_collision()
-    local top_collision_point = self.pos.y - self.radius
-    local botton_collision_poit = self.pos.y +  self.radius
-    local right_collision_poit =  self.pos.x - self.radius
-    local left_collision_poit =  self.pos.x + self.radius
-    
-    if top_collision_point <= 0  or botton_collision_poit >= windows_height then
-        self.vel.y = -self.vel.y
-    end
-    if right_collision_poit <= 0  then
-        self.vel.x =  -self.vel.x
-    end
-    if left_collision_poit >= windows_width then
-        self.vel.x =  -self.vel.x
-    end
+function Ball:reflect_y()
+    self.vel.y = -self.vel.y
 end
 
-function Ball:update (dt)
-    self:window_collision()
+function Ball:reflect_x()
+    self.vel.x = -self.vel.x
+end
+
+function Ball:reset()
+    self.vel = random_speed()
+    self.pos.x = self.reset_pos.x
+    self.pos.y = self.reset_pos.y
+end
+
+function Ball:move(dt)
     self.pos.x = self.pos.x + self.vel.x * dt
     self.pos.y = self.pos.y + self.vel.y * dt
 end
-function Ball:reset()
-    self.vel = random_speed()
-    self.pos = {x = windows_width/2,y = windows_height/2}
-    
+
+function Ball:update_collision_box()
+    self.collision_box =  {
+        x = self.pos.x - self.radius,
+        y = self.pos.y - self.radius,
+        size = self.radius*2
+    }
+end
+
+function Ball:update (dt)
+    self:move(dt)
+    self:update_collision_box()
 end
 function Ball:draw()
+    if self.debug_box then
+        love.graphics.setColor(1,0,0)
+        love.graphics.rectangle("fill",self.collision_box.x,self.collision_box.y,self.collision_box.size,self.collision_box.size)
+    end
     love.graphics.setColor(self.color.r,self.color.g,self.color.b)
     love.graphics.circle(self.mode,self.pos.x,self.pos.y,self.radius)
 end
