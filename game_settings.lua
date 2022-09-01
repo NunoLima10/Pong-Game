@@ -6,7 +6,7 @@ Game_settings = {
     BG_color = {r = 0.1, g = 0.1, b = 0.1},
     player_width = 20,
     player_height = 100,
-    player_move_speed = 200,
+    player_move_speed = 250,
     ball_radius = 10,
     player_keys = {A={up ="z",down = "s"} ,B={up ="o",down = "l"}},
     font_size = 50
@@ -34,7 +34,7 @@ Ball_settings = {
     radius = Game_settings.ball_radius,
     color = {r= 1, g = 1, b = 1},
     mode = "fill",
-    debug_box = true
+    debug_box = false
 }
 
 Game_settings.screen_center = {

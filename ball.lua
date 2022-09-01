@@ -8,8 +8,8 @@ local function random_speed()
         x_diretion = love.math.random(-1,1)
         y_diretion = love.math.random(-1,1)
     until (x_diretion~= 0 and y_diretion ~= 0)
-    local vel_x = love.math.random(250,300) * x_diretion
-    local vel_y = love.math.random(50,100) * y_diretion
+    local vel_x = love.math.random(300,350) * x_diretion
+    local vel_y = love.math.random(80,100) * y_diretion
 
     return {x = vel_x, y =vel_y}
 end
